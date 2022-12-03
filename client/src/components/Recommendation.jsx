@@ -1,32 +1,30 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import Card from "../components/Card";
-import axios from "axios";
+import Card from "./Card";
 
 const Container = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  flex: 2;
 `;
 
-const Home = ({ type }) => {
+const Recommendation = ({ tags }) => {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
     const fetchVideos = async () => {
-      const res = await axios.get(`/api/videos/${type}`);
+      const res = await axios.get(`/api/videos/tags?tags=${tags}`);
       setVideos(res.data);
     };
     fetchVideos();
-  }, [type]);
+  }, [tags]);
 
   return (
     <Container>
       {videos.map((video) => (
-        <Card video={video} key={video._id} />
+        <Card type="sm" video={video} key={video._id} />
       ))}
     </Container>
   );
 };
 
-export default Home;
+export default Recommendation;

@@ -1,4 +1,7 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { format } from "timeago.js";
 
 const Container = styled.div`
   display: flex;
@@ -35,20 +38,29 @@ const Text = styled.span`
   font-size: 14px;
 `;
 
-const Comment = () => {
+const Comment = ({ comment }) => {
+  const [commentUser, setCommentUser] = useState({});
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get(`/api/users/find/${comment.userId}`);
+        setCommentUser(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUser();
+  }, [comment.userId]);
+
   return (
     <Container>
-      <Avatar src="https://yt3.ggpht.com/ytc/AMLnZu9U1YR60O4hjCfJHtYSjlpRNJx07bOADEDb6X-d=s48-c-k-c0x00ffffff-no-rj" />
+      <Avatar src={commentUser.img} />
       <Details>
         <Name>
-          Jeetu Bangari <Date>1 day ago</Date>
+          {commentUser.name} <Date>{format(comment.createdAt)}</Date>
         </Name>
-        <Text>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima
-          officiis, molestiae assumenda fugit dolore quis exercitationem
-          voluptate, neque debitis dolorum expedita. Similique, delectus.
-          Suscipit quaerat nulla ducimus culpa voluptatem iusto?
-        </Text>
+        <Text>{comment.desc}</Text>
       </Details>
     </Container>
   );
