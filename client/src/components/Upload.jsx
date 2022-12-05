@@ -20,7 +20,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 3;
+  z-index: 999;
 `;
 
 const Wrapper = styled.div`

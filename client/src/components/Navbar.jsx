@@ -14,7 +14,6 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.bgLighter};
   height: 56px;
   color: ${({ theme }) => theme.text};
-  z-index: 2;
 `;
 
 const Wrapper = styled.div`
@@ -101,7 +100,15 @@ const Navbar = () => {
               <VideoCallOutlinedIcon onClick={() => setOpen(true)} />
               <Avatar src={currentUser.img} />
               {currentUser.name}
-              <Button onClick={() => dispatch(logout())}>Logout</Button>
+              <Button
+                onClick={() => {
+                  dispatch(logout());
+                  document.cookie =
+                    "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                }}
+              >
+                Logout
+              </Button>
             </User>
           ) : (
             <Link style={{ textDecoration: "none" }} to="/signin">

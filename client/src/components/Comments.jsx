@@ -16,6 +16,7 @@ const Avatar = styled.img`
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  background-color: #999;
 `;
 
 const Input = styled.input`
@@ -26,6 +27,17 @@ const Input = styled.input`
   outline: none;
   padding: 5px;
   width: 100%;
+`;
+
+const Button = styled.button`
+  background-color: #1877f2;
+  font-weight: 500;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  height: max-content;
+  padding: 10px 20px;
+  cursor: not-allowed;
 `;
 
 const Comments = ({ videoId }) => {
@@ -52,7 +64,6 @@ const Comments = ({ videoId }) => {
       desc: userComment,
       videoId: videoId,
     });
-    window.location.reload();
   };
 
   return (
@@ -64,7 +75,9 @@ const Comments = ({ videoId }) => {
             placeholder="Add a comment..."
             onChange={(e) => setUserComment(e.target.value)}
           />
-          <button onClick={handleComment}>submit</button>
+          <Button onClick={handleComment} disabled>
+            submit
+          </Button>
         </NewComment>
       )}
       {comments.map((comment) => (

@@ -4,16 +4,15 @@ import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutl
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import Comments from "../components/Comments";
-import Card from "../components/Card";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { format } from "timeago.js";
 import {
-  fetchFailure,
   fetchStart,
   fetchSuccess,
+  fetchFailure,
   like,
   dislike,
 } from "../redux/videoSlice";
@@ -89,6 +88,7 @@ const Image = styled.img`
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  background-color: #999;
 `;
 
 const ChannelDetail = styled.div`
@@ -170,12 +170,12 @@ const Video = () => {
     <Container>
       <Content>
         <VideoWrapper>
-          <VideoFrame src={currentVideo.videoUrl} controls />
+          <VideoFrame src={currentVideo?.videoUrl} controls />
         </VideoWrapper>
-        <Title>{currentVideo.title}</Title>
+        <Title>{currentVideo?.title}</Title>
         <Details>
           <Info>
-            {currentVideo.views} views {format(currentVideo.createdAt)}
+            {currentVideo?.views} views {format(currentVideo?.createdAt)}
           </Info>
           <Buttons>
             <Button onClick={handleLike}>
@@ -184,7 +184,7 @@ const Video = () => {
               ) : (
                 <ThumbUpOutlinedIcon />
               )}{" "}
-              {currentVideo.likes.length}
+              {currentVideo?.likes.length}
             </Button>
             <Button onClick={handleDislike}>
               {currentVideo?.dislikes.includes(currentUser?._id) ? (
@@ -209,10 +209,10 @@ const Video = () => {
             <ChannelDetail>
               <ChannelName>{channel.name}</ChannelName>
               <ChannelCounter>{channel.subscribers} subscribers</ChannelCounter>
-              <Description>{currentVideo.desc}</Description>
+              <Description>{currentVideo?.desc}</Description>
             </ChannelDetail>
           </ChannelInfo>
-          {currentUser && currentUser?._id !== currentVideo.userId && (
+          {currentUser && currentUser?._id !== currentVideo?.userId && (
             <Subscribe onClick={handleSub}>
               {currentUser?.subscribedUsers.includes(channel._id)
                 ? "Subscribed"
@@ -221,9 +221,9 @@ const Video = () => {
           )}
         </Channel>
         <Hr />
-        <Comments videoId={currentVideo._id} />
+        <Comments videoId={currentVideo?._id} />
       </Content>
-      <Recommendation tags={currentVideo.tags} />
+      <Recommendation tags={currentVideo?.tags} />
     </Container>
   );
 };

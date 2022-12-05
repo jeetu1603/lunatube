@@ -39,8 +39,8 @@ router.get("/random", random);
 // GET SUBSCRIBED USER'S VIDEOS
 router.get("/sub", verify, sub);
 
-router.get("/tags", verify, getByTag);
+router.get("/tags", getByTag);
 
-router.get("/search", verify, search);
+router.get("/search", search);
 
 export default router;
